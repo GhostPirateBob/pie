@@ -24,4 +24,21 @@ enum Architecture
             default => self::x86,
         };
     }
+
+    /**
+     * Returns all known name variants for this architecture, with the
+     * canonical (enum case) name first. Used when matching asset filenames
+     * that may use platform-specific conventions (e.g. "x64" on Windows,
+     * "aarch64" on Linux).
+     *
+     * @return non-empty-list<non-empty-string>
+     */
+    public function allNames(): array
+    {
+        return match ($this) {
+            self::x86_64 => ['x86_64', 'x64'],
+            self::arm64 => ['arm64', 'aarch64'],
+            self::x86 => ['x86'],
+        };
+    }
 }
